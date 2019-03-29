@@ -42,23 +42,23 @@ void loop() {
   // When the sensor value is lager than 200, the sensor recognizes black.
   if(sensorValue_left < 200 && sensorValue_right < 200) {
     SerialUSB.print("go forward\n" );
-    Dxl.goalSpeed(WH_left, 1023); //forward
-    Dxl.goalSpeed(WH_right, 2047); //forward
+    Dxl.goalSpeed(WH_left, 500); //forward
+    Dxl.goalSpeed(WH_right, 1523); //forward
   }
   else if(sensorValue_left < 200 && sensorValue_right >= 200){
     SerialUSB.print("turn left\n" );
-    Dxl.goalSpeed(WH_left, 1535); //forward
+    Dxl.goalSpeed(WH_left, 2000); //forward
     Dxl.goalSpeed(WH_right, 2047); //backward
   }
   else if(sensorValue_left >= 200 && sensorValue_right <= 200){
     SerialUSB.print("turn right\n" );
     Dxl.goalSpeed(WH_left, 1023); //backward
-    Dxl.goalSpeed(WH_right, 512); //forward
+    Dxl.goalSpeed(WH_right, 925); //forward
   }
   else if(sensorValue_left >= 200 && sensorValue_right >= 200){
     SerialUSB.print("go backward\n" );
-    Dxl.goalSpeed(WH_left, 2047); //backward
-    Dxl.goalSpeed(WH_right, 1023); //backward
+    Dxl.goalSpeed(WH_left, 1023); //backward
+    Dxl.goalSpeed(WH_right, 925); //forward
   }
   
 }
