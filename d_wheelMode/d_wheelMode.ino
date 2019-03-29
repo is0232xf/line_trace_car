@@ -35,11 +35,6 @@ void setup() {
 }
 
 void loop() {
-  Dxl.goalSpeed(ID_NUM, 400); //forward
-  delay(5000);
-  Dxl.goalSpeed(ID_NUM, 400 | 0x400); //reverse
-  delay(5000); 
-  Dxl.goalSpeed(ID_NUM, 0); //stop
-  delay(2000);
+  Dxl.goalSpeed(ID_NUM, 1000); //forward
 }
 
