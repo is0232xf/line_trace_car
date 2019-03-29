@@ -38,7 +38,7 @@ void setup() {
 }
 
 void loop() {
-  //Dxl.goalSpeed(ID1, 2047); //forward
+  Dxl.goalSpeed(ID1, 2047); //forward
   Dxl.goalSpeed(ID2, 1023); //forward
 }
 

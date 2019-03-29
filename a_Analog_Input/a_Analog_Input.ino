@@ -23,10 +23,10 @@ const int analogInPin_left = 1; // Analog input pin that the potentiometer
 const int analogInPin_right = 3; // Analog input pin that the potentiometer
 
 // These variables will change:
-int sensorValue_left = 0;        // value read from the pot
-int sensorValue_right = 0;        // value read from the pot
-int outputValue_left = 0;        // value output to the PWM
-int outputValue_right = 0;        // value output to the PWM
+float sensorValue_left = 0;        // value read from the pot
+float sensorValue_right = 0;        // value read from the pot
+float outputValue_left = 0;        // value output to the PWM
+float outputValue_right = 0;        // value output to the PWM
 
 void setup() {
   // Configure the ADC pin
@@ -41,8 +41,8 @@ void loop() {
   sensorValue_left = analogRead(analogInPin_left);
   sensorValue_right = analogRead(analogInPin_right);
   // map it to the range of the analog out:
-  outputValue_left = map(sensorValue_left, 0, 4095, 0, 65535);
-  outputValue_right = map(sensorValue_right, 0, 4095, 0, 65535);
+  outputValue_left = map(sensorValue_left, 0, 4095, 0, 100);
+  outputValue_right = map(sensorValue_right, 0, 4095, 0, 100);
 
   // print the results to the serial monitor:
   SerialUSB.print("left sensor = " );
