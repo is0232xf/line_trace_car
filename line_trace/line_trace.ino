@@ -5,6 +5,8 @@
 #define WH_right 1
 #define WH_left 2
 
+Dynamixel Dxl(DXL_BUS_SERIAL1);
+
 const int analogInPin_left = 1; // Analog input pin that the potentiometer
 const int analogInPin_right = 3; // Analog input pin that the potentiometer
 
@@ -13,6 +15,7 @@ int sensorValue_left = 0;        // value read from the pot
 int sensorValue_right = 0;        // value read from the pot
 
 void setup() {
+  Dxl.begin(3);
   Dxl.wheelMode(WH_right); //wheelMode() is to use wheel mode
   Dxl.wheelMode(WH_left); //wheelMode() is to use wheel mode
   // Configure the ADC pin
@@ -29,28 +32,34 @@ void loop() {
   // print the results to the serial monitor:
   SerialUSB.print("left sensor = " );
   SerialUSB.print(sensorValue_left);
+  SerialUSB.print("\n" );
   
   SerialUSB.print("right sensor = " );
   SerialUSB.print(sensorValue_right);
+  SerialUSB.print("\n" );
+  
   // When the sensor value is smaller than 200, the sensor recognizes white.
   // When the sensor value is lager than 200, the sensor recognizes black.
   if(sensorValue_left < 200 && sensorValue_right < 200) {
-    Dxl.goalSpeed(WH_left, 2047); //forward
-    Dxl.goalSpeed(WH_right, 1023); //forward
-  }
-  else if(sensorValue_left < 200 && sensorValue_right >= 200){
-    Dxl.goalSpeed(WH_left, 512); //forward
-    Dxl.goalSpeed(WH_right, 1023); //forward
-  }
-  else if(sensorValue_left >= 200 && sensorValue_right <= 200){
-    Dxl.goalSpeed(WH_left, 2047); //forward
-    Dxl.goalSpeed(WH_right, 1535); //forward
-  }
-  else if(sensorValue_left >= 200 && sensorValue_right >= 200){
+    SerialUSB.print("go forward\n" );
     Dxl.goalSpeed(WH_left, 1023); //forward
     Dxl.goalSpeed(WH_right, 2047); //forward
-  }    
-  delay(10);
+  }
+  else if(sensorValue_left < 200 && sensorValue_right >= 200){
+    SerialUSB.print("turn left\n" );
+    Dxl.goalSpeed(WH_left, 1023); //backward
+    Dxl.goalSpeed(WH_right, 512); //forward
+  }
+  else if(sensorValue_left >= 200 && sensorValue_right <= 200){
+    SerialUSB.print("turn right\n" );
+    Dxl.goalSpeed(WH_left, 1535); //forward
+    Dxl.goalSpeed(WH_right, 2047); //backward
+  }
+  else if(sensorValue_left >= 200 && sensorValue_right >= 200){
+    SerialUSB.print("go backward\n" );
+    Dxl.goalSpeed(WH_left, 2047); //backward
+    Dxl.goalSpeed(WH_right, 1023); //backward
+  }
 }
 
 
