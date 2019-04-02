@@ -9,12 +9,15 @@ Dynamixel Dxl(DXL_BUS_SERIAL1);
 
 const int analogInPin_left = 1; // Analog input pin that the potentiometer
 const int analogInPin_right = 3; // Analog input pin that the potentiometer
+int random_num;
 
 // These variables will change:
 int sensorValue_left = 0;        // value read from the pot
 int sensorValue_right = 0;        // value read from the pot
 
 void setup() {
+  //Serial.begin(9600);
+  randomSeed(analogRead(0));
   Dxl.begin(3);
   Dxl.wheelMode(WH_right); //wheelMode() is to use wheel mode
   Dxl.wheelMode(WH_left); //wheelMode() is to use wheel mode
@@ -26,6 +29,7 @@ void setup() {
 }
 
 void loop() {
+  random_num = random(100);
   // read the analog in value:
   sensorValue_left = analogRead(analogInPin_left);
   sensorValue_right = analogRead(analogInPin_right);
@@ -42,23 +46,34 @@ void loop() {
   // When the sensor value is lager than 200, the sensor recognizes black.
   if(sensorValue_left < 200 && sensorValue_right < 200) {
     SerialUSB.print("go forward\n" );
-    Dxl.goalSpeed(WH_left, 500); //forward
-    Dxl.goalSpeed(WH_right, 1523); //forward
+    Dxl.goalSpeed(WH_left, 1023); //forward
+    Dxl.goalSpeed(WH_right, 2047); //forward
   }
   else if(sensorValue_left < 200 && sensorValue_right >= 200){
     SerialUSB.print("turn left\n" );
-    Dxl.goalSpeed(WH_left, 2000); //forward
+    Dxl.goalSpeed(WH_left, 2047); //forward
     Dxl.goalSpeed(WH_right, 2047); //backward
+    delay(100);
   }
   else if(sensorValue_left >= 200 && sensorValue_right <= 200){
     SerialUSB.print("turn right\n" );
     Dxl.goalSpeed(WH_left, 1023); //backward
-    Dxl.goalSpeed(WH_right, 925); //forward
+    Dxl.goalSpeed(WH_right, 1023); //forward
+    delay(100);
   }
   else if(sensorValue_left >= 200 && sensorValue_right >= 200){
-    SerialUSB.print("go backward\n" );
-    Dxl.goalSpeed(WH_left, 1023); //backward
-    Dxl.goalSpeed(WH_right, 925); //forward
+    if(random_num < 50){
+      SerialUSB.print("turn right\n" );
+      Dxl.goalSpeed(WH_left, 1023); //forward
+      Dxl.goalSpeed(WH_right, 1023); //backward
+      delay(1000);
+    }
+    else if(random_num >= 50){
+      SerialUSB.print("turn left\n" );
+      Dxl.goalSpeed(WH_left, 2047); //forward
+      Dxl.goalSpeed(WH_right, 2047); //backward
+      delay(1000);
+    }
   }
   
 }
