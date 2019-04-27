@@ -53,27 +53,16 @@ void loop() {
     SerialUSB.print("turn left\n" );
     Dxl.goalSpeed(WH_left, 2047); //forward
     Dxl.goalSpeed(WH_right, 2047); //backward
-    delay(100);
   }
   else if(sensorValue_left >= 200 && sensorValue_right <= 200){
     SerialUSB.print("turn right\n" );
     Dxl.goalSpeed(WH_left, 1023); //backward
     Dxl.goalSpeed(WH_right, 1023); //forward
-    delay(100);
   }
   else if(sensorValue_left >= 200 && sensorValue_right >= 200){
-    if(random_num < 50){
-      SerialUSB.print("turn right\n" );
-      Dxl.goalSpeed(WH_left, 1023); //forward
-      Dxl.goalSpeed(WH_right, 1023); //backward
-      delay(1000);
-    }
-    else if(random_num >= 50){
-      SerialUSB.print("turn left\n" );
-      Dxl.goalSpeed(WH_left, 2047); //forward
-      Dxl.goalSpeed(WH_right, 2047); //backward
-      delay(1000);
-    }
+    SerialUSB.print("turn right\n" );
+    Dxl.goalSpeed(WH_left, 1023); //forward
+    Dxl.goalSpeed(WH_right, 1023); //backward
   }
   
 }
